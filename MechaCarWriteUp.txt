@@ -1,0 +1,188 @@
+A. Design a linear model that predicts the mpg of MechaCar prototypes 
+using a number of variables within the MechaCar mpg dataset
+
+1. Which variables/coefficients provided a non-random amount of variance 
+to the mpg values in the dataset?
+
+The output of the multiple linear regression model is 
+
+##############################################################
+Call:
+lm(formula = mpg ~ length + weight + s_angle + g_clearance + 
+    AWD, data = mechacar)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-19.4701  -4.4994  -0.0692   5.4433  18.5849 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -1.040e+02  1.585e+01  -6.559 5.08e-08 ***
+length       6.267e+00  6.553e-01   9.563 2.60e-12 ***
+weight       1.245e-03  6.890e-04   1.807   0.0776 .  
+s_angle      6.877e-02  6.653e-02   1.034   0.3069    
+g_clearance  3.546e+00  5.412e-01   6.551 5.21e-08 ***
+AWD         -3.411e+00  2.535e+00  -1.346   0.1852    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 8.774 on 44 degrees of freedom
+Multiple R-squared:  0.7149,	Adjusted R-squared:  0.6825 
+F-statistic: 22.07 on 5 and 44 DF,  p-value: 5.35e-11
+
+##################################################################
+
+Findings/Answers :
+1. Length and ground clearance are below significant level of 0.05 , 
+thus the alternative hypothesis is valid. In fact they are below 1 in million.
+
+2. Is the slope of the linear model considered to be zero? Why or why not?
+Slope is not zero, as p-value for length and ground clearance is below the significnt level. 
+
+3. Does this linear model predict mpg of MechaCar prototypes effectively? Why or why not?
+This model indicates that length and ground clearance contribute the variation in mpg.
+But the intercept is below the significant level, indicationg there are other parameters 
+also contibute to non random change. R-squared value is 0.71 indicating that this model is 
+reasonable first order approximation, but can be improved by having other parameters that
+contribute the variation. Based on pearson's coeff, r>0.7 is strong for linear model.
+For multi regression, r^2 at 0.71 or approximate r at 0.84 is good.
+
+B. Create a summary statistics table for the suspension coil’s pounds-per-inch 
+continuous variable.
+
+The metrics for three lots:	
+m_lot	Mean_PSI	Median_PSI	Variance_PSI	Std_Dev_PSI
+Lot1	1500.018	1500.206	1.146024	1.070525
+Lot2	1499.571	1498.873	10.131511	3.183003
+Lot3	1499.004	1497.981	220.010563	14.832753
+
+Findings/Conclusion:
+Lot 3 variance is at 220.010, which is larger than 100. The manufacturing 
+process has a variance that cannot guarantee quality. These(Lot 3) coils may be 
+partially scrapped, leading to higher cost. Note 3sigma for Lot 3 is 44.50, 
+i.e 99.7% will fall in 1499 +- 44.5 PSI. which wider than for Lot 1/Lot 2 (+-3.21/+-9.54)
+
+C.Determine if the suspension coil’s pound-per-inch results are statistically different from 
+the mean population results of 1,500 pounds per inch?
+Results
+###################################################################
+one t-test
+
+	One Sample t-test
+
+data:  sample_table$PSI
+t = -0.68216, df = 49, p-value = 0.4984
+alternative hypothesis: true mean is not equal to 1499.531
+95 percent confidence interval:
+ 1495.720 1501.411
+sample estimates:
+mean of x 
+ 1498.565 
+##########################
+	Welch Two Sample t-test
+
+data:  sample_table3$PSI and sample_table4$PSI
+t = 0.016034, df = 88.962, p-value = 0.9872
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -3.792245  3.853945
+sample estimates:
+mean of x mean of y 
+ 1499.466  1499.435 
+##########################
+t.test(lot1$PSI,lot2$PSI,paired = T) #compare the mean difference between two samples
+
+	Paired t-test
+
+data:  lot1$PSI and lot2$PSI
+t = 0.96352, df = 49, p-value = 0.34
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.4856219  1.3802339
+sample estimates:
+mean of the differences 
+               0.447306 
+############################
+t.test(lot1$PSI,lot3$PSI,paired = T) #compare the mean difference between two samples
+
+	Paired t-test
+
+data:  lot1$PSI and lot3$PSI
+t = 0.48771, df = 49, p-value = 0.6279
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -3.164966  5.193492
+sample estimates:
+mean of the differences 
+               1.014263 
+############################
+t.test(lot2$PSI,lot3$PSI,paired = T) #compare the mean difference between two samples
+
+	Paired t-test
+
+data:  lot2$PSI and lot3$PSI
+t = 0.2525, df = 49, p-value = 0.8017
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -3.945263  5.079178
+sample estimates:
+mean of the differences 
+              0.5669574 
+####################################################################
+
+Findings/Conclusion
+We looked at the PSI distribution for normality, and 
+found samples/population were all normally distributed.
+
+P-value in all test are higher than significant levels. So cannot reject the null hypothesis
+
+The population size was 150. So comparing a sample to population is better.
+I think in this case both the tests could be applied. Using individual lots for paired testing
+may indicate if there is a problem in the process of some of the lots, but this requires additional
+parameters about the manufacturing process.
+
+D. Design a study that compares the performance of the MechaCar prototype 
+vehicle to other comparable vehicles on the market?
+
+Let us define performance for this study. All key parameters for which the customer will select 
+and pay for the features, e.g 
+	1.fuel efficiency
+	2.reliability (#number of failures per 10000 miles or time etc)
+	3.safety
+	4.horse power
+	5.options like color, drive type etc
+	6. cost of maintenance
+
+To make a statistically unbiased comparison we need historical data of the vehicles in the market
+The data should be vaidated with 
+	1. t-Tests (one , two, paired as necessary,e.g between make/model, sample/whole population, samples)
+	2. linear/multi linear regression especially for key parameters like
+		a. fuel efficiency
+		b. reliabilty (#number of failures in the last 3 years for the vehicles in the market)
+			- for our prototype , we have justify it (no data avialable yet or we have get internal data)
+
+We can use this as supporting evidence to claim that our new prototype has better performance. 
+
+Some of the hypothesis e.g for 
+	A. fuel efficiency :
+	1. null hypothesis : for similar #of cylinders the fuel efficiency is same as other makes or model
+        2. alt hypothesis  : we are better by some %.
+	
+	B. Reliability :
+	1. null hypothesis : for similar features we are the same as others
+	2. alt hypothesis : we are better by #no.of failures/10,000miles etc.
+
+	C. Safety :
+	1. null hypothesis : for smiliar type vehicle the accident rate is the same.
+	2. alt hypothesis : we are better because of our innovative safety systems 
+		- linerar / multi regresssion can show this capability.
+Data Collection :
+	1. From service records for failures, cost of maintenace
+	2. Dmv/insurance records for failures/accidents
+	3. Internal test data. Need to work with the development/test team to get sufficient data 
+	  for statistical comparison. This should cover the range, be of the right data type to 
+	  do t-tests, regression models.
+	4. test agencies for safety , (EPA)fuel efficiency etc.
+
+
+

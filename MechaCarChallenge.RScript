@@ -1,0 +1,43 @@
+#Multiple Linear Regression Model
+mechacar<-read.csv(file='MechaCar_mpg.csv',check.names=F,stringsAsFactors=F) #read the file
+head(mechacar)  #understand the data
+colnames(mechacar) #prepare to rename columns
+names(mechacar)[names(mechacar) == "vehicle length"] <- "length"
+names(mechacar)[names(mechacar) == "vehicle weight"] <- "weight"
+names(mechacar)[names(mechacar) == "spoiler angle"] <- "s_angle"
+names(mechacar)[names(mechacar) == "ground clearance"] <- "g_clearance"  #rename for convenience
+head(mechacar)
+lm(mpg ~ length+weight+s_angle+g_clearance+AWD,data=mechacar)  #multiple regression model
+summary(lm(mpg ~ length+weight+s_angle+g_clearance+AWD,data=mechacar))
+
+#group by and statistical data of suspension pressure
+suspension<-read.csv(file='Suspension_Coil.csv',check.names=F,stringsAsFactors=F) #read the file
+head(suspension)
+colnames(suspension) #prepare to rename columns
+names(suspension)[names(suspension) == "Manufacturing_Lot"] <- "m_lot"
+library(tidyverse)
+summarize_lot <- suspension %>% group_by(m_lot) %>% summarize(Mean_PSI=mean(PSI),Median_PSI=median(PSI),Variance_PSI=var(PSI),Std_Dev_PSI=sd(PSI))
+                                                                  
+#one sample t-test   
+#population distribution
+plt <- ggplot(suspension,aes(x=PSI))
+plt + geom_density() #visualize distribution using density plot
+sample_table <- suspension %>% sample_n(50) #randomly sample 50 data points
+#sample distribution
+plt <- ggplot(sample_table,aes(x=PSI))
+plt + geom_density() #visualize distribution using density plot
+t.test(sample_table$PSI,mu=mean(suspension$PSI)) #compare sample versus population means
+
+#two sample t-test
+sample_table3 <- suspension %>% sample_n(50) #randomly sample 50 data points
+sample_table4 <- suspension %>% sample_n(50) #randomly sample 50 data points
+t.test(sample_table3$PSI,sample_table4$PSI) #compare sample versus sample
+head(suspension)
+# paired t-test
+lot1 <- suspension %>% filter(m_lot=="Lot1") #select only data points lot 1
+lot2 <- suspension %>% filter(m_lot=="Lot2") #select only data points lot 2
+lot3 <- suspension %>% filter(m_lot=="Lot3") #select only data points lot 3
+
+t.test(lot1$PSI,lot2$PSI,paired = T) #compare the mean difference between two samples
+t.test(lot1$PSI,lot3$PSI,paired = T) #compare the mean difference between two samples
+t.test(lot2$PSI,lot3$PSI,paired = T) #compare the mean difference between two samples
