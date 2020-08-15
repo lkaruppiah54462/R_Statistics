@@ -29,6 +29,27 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 8.774 on 44 degrees of freedom
 Multiple R-squared:  0.7149,	Adjusted R-squared:  0.6825 
 F-statistic: 22.07 on 5 and 44 DF,  p-value: 5.35e-11
+##############################
+summary(lm(mpg ~ length+g_clearance,data=mechacar))
+
+Call:
+lm(formula = mpg ~ length + g_clearance, data = mechacar)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-17.493  -7.705   1.344   6.642  18.500 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -91.5573    13.9649  -6.556 3.86e-08 ***
+length        6.0811     0.6732   9.033 7.68e-12 ***
+g_clearance   3.5669     0.5401   6.604 3.26e-08 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 9.078 on 47 degrees of freedom
+Multiple R-squared:  0.674,	Adjusted R-squared:  0.6601 
+F-statistic: 48.59 on 2 and 47 DF,  p-value: 3.637e-12
 
 ##################################################################
 
@@ -46,6 +67,13 @@ also contibute to non random change. R-squared value is 0.71 indicating that thi
 reasonable first order approximation, but can be improved by having other parameters that
 contribute the variation. Based on pearson's coeff, r>0.7 is strong for linear model.
 For multi regression, r^2 at 0.71 or approximate r at 0.84 is good.
+
+4. Created a linear model with just length and ground clearance. In the above we have the intercepts
+and coeficiencts to predict mpg = -91.5573 + 6.0811*[length] + 3.5669*[ground clearance].
+It will be good to plot it in 3d to compare. 2d comparison was good. Images in github/readme.
+
+
+
 
 B. Create a summary statistics table for the suspension coil’s pounds-per-inch 
 continuous variable.
@@ -140,6 +168,9 @@ The population size was 150. So comparing a sample to population is better.
 I think in this case both the tests could be applied. Using individual lots for paired testing
 may indicate if there is a problem in the process of some of the lots, but this requires additional
 parameters about the manufacturing process.
+
+
+
 
 D. Design a study that compares the performance of the MechaCar prototype 
 vehicle to other comparable vehicles on the market?

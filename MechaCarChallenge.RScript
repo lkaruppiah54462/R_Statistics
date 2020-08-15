@@ -7,8 +7,23 @@ names(mechacar)[names(mechacar) == "vehicle weight"] <- "weight"
 names(mechacar)[names(mechacar) == "spoiler angle"] <- "s_angle"
 names(mechacar)[names(mechacar) == "ground clearance"] <- "g_clearance"  #rename for convenience
 head(mechacar)
+
 lm(mpg ~ length+weight+s_angle+g_clearance+AWD,data=mechacar)  #multiple regression model
 summary(lm(mpg ~ length+weight+s_angle+g_clearance+AWD,data=mechacar))
+#run again with the key contributors -length and g_clearance
+summary(lm(mpg ~ length+g_clearance,data=mechacar))
+
+#create the model and compare it. For 2d plots can only do one at a time
+model <- lm(mpg ~ length+g_clearance,data=mechacar) #create linear model
+yvals <- model$coefficients['length']*mechacar$length + model$coefficients['g_clearance']*mechacar$g_clearance+
+  model$coefficients['(Intercept)'] #determine y-axis values from linear model
+#plot mpg vs length
+plt <- ggplot(mechacar,aes(x=length,y=mpg)) #import dataset into ggplot2
+plt + geom_point() + geom_line(aes(y=yvals), color = "red") #plot scatter
+#plot mpg vs g_clearance
+plt <- ggplot(mechacar,aes(x=g_clearance,y=mpg)) #import dataset into ggplot2
+plt + geom_point() + geom_line(aes(y=yvals), color = "blue") #plot scatter
+
 
 #group by and statistical data of suspension pressure
 suspension<-read.csv(file='Suspension_Coil.csv',check.names=F,stringsAsFactors=F) #read the file
@@ -37,7 +52,12 @@ head(suspension)
 lot1 <- suspension %>% filter(m_lot=="Lot1") #select only data points lot 1
 lot2 <- suspension %>% filter(m_lot=="Lot2") #select only data points lot 2
 lot3 <- suspension %>% filter(m_lot=="Lot3") #select only data points lot 3
-
+plt <- ggplot(lot1,aes(x=PSI))
+plt + geom_density() #visualize distribution using density plot
+plt <- ggplot(lot2,aes(x=PSI))
+plt + geom_density() #visualize distribution using density plot
+plt <- ggplot(lot3,aes(x=PSI))
+plt + geom_density() #visualize distribution using density plot
 t.test(lot1$PSI,lot2$PSI,paired = T) #compare the mean difference between two samples
 t.test(lot1$PSI,lot3$PSI,paired = T) #compare the mean difference between two samples
 t.test(lot2$PSI,lot3$PSI,paired = T) #compare the mean difference between two samples
