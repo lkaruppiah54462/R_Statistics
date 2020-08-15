@@ -2,7 +2,7 @@
 
 ## Normal distribution plots (lot1,lot2,lot3,population)
 
-![](lot1normal distributionleftskewRplot.png)
+![](lot1normaldistributionleftskewRplot.png)
 
 ![](lot2normaldistributionRplot.png)
 
