@@ -2,18 +2,18 @@
 
 ## Normal distribution plots (lot1,lot2,lot3,population)
 
-![](lot1normal distributionleftskewRplot.pdf)
+![](lot1normal distributionleftskewRplot.png)
 
-![](lot2normaldistributionRplot.pdf)
+![](lot2normaldistributionRplot.png)
 
-![](lot3normaldistributionRplot.pdf)
+![](lot3normaldistributionRplot.png)
 
-![](suspensionnormaldistribution.pdf)
+![](suspensionnormaldistributionRplot.png)
 
 
 
 ## Linear Model Plots(ground clearance,length)
 
-![](mpgvsg_ClearanceRplot.pdf)
+![](mpgvsg_ClearanceRplot.png)
 
-![](mpgvslengthRplot.pdf)
+![](mpgvslengthRplot.png)
