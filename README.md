@@ -13,6 +13,7 @@
 
 
 ## Linear Model Plots(ground clearance,length)
+mpg = -91.5573 + 6.0811*[length] + 3.5669*[ground clearance]
 
 ![](mpgvsg_ClearanceRplot.png)
 
