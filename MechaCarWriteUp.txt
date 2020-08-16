@@ -50,6 +50,47 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 9.078 on 47 degrees of freedom
 Multiple R-squared:  0.674,	Adjusted R-squared:  0.6601 
 F-statistic: 48.59 on 2 and 47 DF,  p-value: 3.637e-12
+###############################
+summary(lm(mpg ~ length,data=mechacar))
+
+Call:
+lm(formula = mpg ~ length, data = mechacar)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-26.303  -7.160  -1.231   9.374  26.670 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -25.0622    13.2960  -1.885   0.0655 .  
+length        4.6733     0.8774   5.326 2.63e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 12.47 on 48 degrees of freedom
+Multiple R-squared:  0.3715,	Adjusted R-squared:  0.3584 
+F-statistic: 28.37 on 1 and 48 DF,  p-value: 2.632e-06
+##############################
+
+summary(lm(mpg ~ g_clearance,data=mechacar))
+
+Call:
+lm(formula = mpg ~ g_clearance, data = mechacar)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-28.788  -9.990  -1.615   7.332  35.803 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)  
+(Intercept)  19.4175    10.8662   1.787   0.0803 .
+g_clearance   2.0222     0.8385   2.412   0.0198 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 14.86 on 48 degrees of freedom
+Multiple R-squared:  0.1081,	Adjusted R-squared:  0.08949 
+F-statistic: 5.816 on 1 and 48 DF,  p-value: 0.01975
 
 ##################################################################
 
@@ -72,8 +113,12 @@ For multi regression, r^2 at 0.71 or approximate r at 0.84 is good.
 and coeficiencts to predict mpg = -91.5573 + 6.0811*[length] + 3.5669*[ground clearance].
 It will be good to plot it in 3d to compare. 2d comparison was good. Images in github/readme.
 
-
-
+5. Created 2 linear model with one independent variable, a)length b)ground clearance
+a)length : p-value was low (2.63e-06) for length as expected and the model was
+mpg = -25.0622 + 4.6733*length
+b) ground_clearance : p-value was 0.0198 below significant level. Model was
+mpg = 19.4175 + 2.0222*ground_clearance
+Linear scatter Plots were made and saved in README file.
 
 B. Create a summary statistics table for the suspension coil’s pounds-per-inch 
 continuous variable.

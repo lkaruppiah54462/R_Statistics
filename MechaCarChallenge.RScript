@@ -12,7 +12,7 @@ lm(mpg ~ length+weight+s_angle+g_clearance+AWD,data=mechacar)  #multiple regress
 summary(lm(mpg ~ length+weight+s_angle+g_clearance+AWD,data=mechacar))
 #run again with the key contributors -length and g_clearance
 summary(lm(mpg ~ length+g_clearance,data=mechacar))
-
+library(tidyverse)
 #create the model and compare it. For 2d plots can only do one at a time
 model <- lm(mpg ~ length+g_clearance,data=mechacar) #create linear model
 yvals <- model$coefficients['length']*mechacar$length + model$coefficients['g_clearance']*mechacar$g_clearance+
@@ -24,7 +24,19 @@ plt + geom_point() + geom_line(aes(y=yvals), color = "red") #plot scatter
 plt <- ggplot(mechacar,aes(x=g_clearance,y=mpg)) #import dataset into ggplot2
 plt + geom_point() + geom_line(aes(y=yvals), color = "blue") #plot scatter
 
+#linear regression - one independent variable - length
+summary(lm(mpg ~ length,data=mechacar))
+model <- lm(mpg ~ length,data=mechacar)
+yvals <- model$coefficients['length']*mechacar$length + model$coefficients['(Intercept)']
+plt <- ggplot(mechacar,aes(x=length,y=mpg)) 
+plt + geom_point() + geom_line(aes(y=yvals), color = "red") #plot scatter
 
+#linear regression - one independent variable - ground clearance
+summary(lm(mpg ~ g_clearance,data=mechacar))
+model <- lm(mpg ~ g_clearance,data=mechacar)
+yvals <- model$coefficients['g_clearance']*mechacar$g_clearance + model$coefficients['(Intercept)']
+plt <- ggplot(mechacar,aes(x=g_clearance,y=mpg)) 
+plt + geom_point() + geom_line(aes(y=yvals), color = "red") #plot scatter
 #group by and statistical data of suspension pressure
 suspension<-read.csv(file='Suspension_Coil.csv',check.names=F,stringsAsFactors=F) #read the file
 head(suspension)
